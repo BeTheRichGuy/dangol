@@ -1,0 +1,122 @@
+.cs {
+  display: grid;
+  gap: 8px;
+}
+.cs__frame {
+  display: grid;
+}
+.cs__row {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+}
+.cs__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(246, 201, 139, 0.36);
+  border-radius: 999px;
+  background: rgba(246, 201, 139, 0.08);
+  color: #f6c98b;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms var(--ease-out);
+}
+.cs__btn:active {
+  transform: scale(0.97);
+}
+.cs__btn:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+.cs__btn:focus-visible {
+  outline: 2px solid #f6c98b;
+  outline-offset: 2px;
+}
+.cs__fail {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ivory-soft);
+}
+
+.cs-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  padding: max(16px, var(--safe-top)) 16px max(16px, var(--safe-bottom));
+  background: rgba(6, 8, 24, 0.86);
+}
+.cs-sheet__card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: min(100%, 420px);
+  margin: auto;
+  padding: 14px 14px 16px;
+  border: 1px solid rgba(246, 201, 139, 0.4);
+  border-radius: 20px;
+  background: #121a40;
+  color: var(--ivory);
+  text-align: center;
+}
+.cs-sheet__title {
+  margin: 4px 44px 0;
+  min-height: 30px;
+  display: grid;
+  place-items: center;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.cs-sheet__close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ivory);
+  cursor: pointer;
+}
+.cs-sheet__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 64svh;
+  object-fit: contain;
+  border-radius: 12px;
+
+  -webkit-touch-callout: default;
+}
+.cs-sheet__btns {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 8px;
+  width: 100%;
+}
+.cs-sheet__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.cs-sheet__hint {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ivory-soft);
+}
+:root:is([lang="ko"], [lang="ja"]) :is(.cs-sheet__hint, .cs__fail) {
+  word-break: keep-all;
+}

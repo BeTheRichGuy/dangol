@@ -1,0 +1,214 @@
+.tl-gift {
+  margin: 32px 0 0;
+  padding: 14px 16px 14px;
+  border: 1px solid rgba(246, 201, 139, 0.36);
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(255, 246, 230, 0.1), rgba(255, 246, 230, 0.03));
+  color: var(--ivory);
+}
+.tl-gift__eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--glow);
+}
+.tl-gift__title {
+  margin: 2px 0 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.tl-gift__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tl-gift__item {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  width: 64px;
+}
+.tl-gift__item .tl-icon {
+  width: 56px;
+}
+.tl-gift__name {
+  font-size: 0.75rem;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--ivory-soft);
+}
+.tl-gift__tap {
+  margin: 10px 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--glow);
+}
+.tl-gift__lead {
+  margin: 6px 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ivory-soft);
+}
+:root:is([lang="ko"], [lang="ja"]) :is(.tl-gift__lead, .tl-gift__tap) {
+  word-break: keep-all;
+}
+.tl-icon:focus-visible,
+.tl-sheet__close:focus-visible {
+  outline: 2px solid var(--glow);
+  outline-offset: 2px;
+}
+
+.tl-shelf {
+  margin: 24px 24px 0;
+  padding: 16px 16px 14px;
+  border: 1px solid rgba(246, 201, 139, 0.36);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(255, 246, 230, 0.1), rgba(255, 246, 230, 0.03));
+  color: var(--ivory);
+}
+.tl-shelf__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tl-shelf__title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+.tl-shelf__count {
+  font-size: 0.875rem;
+  color: var(--ivory-soft);
+}
+.tl-shelf__lead {
+  margin: 8px 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ivory-soft);
+}
+:root:is([lang="ko"], [lang="ja"]) .tl-shelf__lead {
+  word-break: keep-all;
+}
+.tl-shelf__row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tl-icon {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 5;
+  padding: 0;
+  border: 1px solid rgba(246, 201, 139, 0.3);
+  border-radius: 10px;
+  background: #10183a;
+  overflow: hidden;
+  cursor: pointer;
+}
+.tl-icon img {
+  position: absolute;
+  top: -7%;
+  left: -40%;
+  width: 180%;
+  max-width: none;
+  height: auto;
+}
+.tl-icon:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.tl-icon[data-owned="false"] {
+  cursor: default;
+  opacity: 0.55;
+}
+.tl-icon[data-owned="false"] img {
+  filter: grayscale(1) brightness(0.45);
+}
+
+.tl-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  padding: max(16px, var(--safe-top)) 16px max(16px, var(--safe-bottom));
+  background: rgba(6, 8, 24, 0.84);
+}
+.tl-sheet__card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  width: min(100%, 360px);
+  margin: auto;
+  padding: 44px 16px 18px;
+  border: 1px solid rgba(246, 201, 139, 0.4);
+  border-radius: 20px;
+  background: #121a40;
+  color: var(--ivory);
+  text-align: center;
+}
+.tl-sheet__close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ivory);
+  cursor: pointer;
+}
+.tl-sheet__img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+.tl-sheet__reason {
+  margin: 6px 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--glow);
+}
+.tl-sheet__name {
+  margin: 8px 0 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.tl-sheet__line {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ivory-soft);
+}
+:root:is([lang="ko"], [lang="ja"]) :is(.tl-sheet__line, .tl-sheet__note) {
+  word-break: keep-all;
+}
+.tl-sheet__save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 8px;
+}
+.tl-sheet__note {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ivory-soft);
+}

@@ -1,0 +1,15 @@
+# 줄바꿈은 어느 OS에서 받아도 LF로 맞춘다(윈도우 Git 기본값 core.autocrlf=true 가 CRLF로 바꾸면 줄 단위 정규식을 쓰는 테스트가 깨진다).
+* text=auto eol=lf
+
+# 그림·영상·글꼴은 바이너리
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+*.webp  binary
+*.gif   binary
+*.ico   binary
+*.mp4   binary
+*.webm  binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary

@@ -1,0 +1,162 @@
+.rf-guided .rf-main {
+  padding-bottom: max(40px, var(--safe-bottom));
+}
+.rf-top--guided {
+  justify-content: space-between;
+}
+.rf-step {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ivory-soft);
+  font-variant-numeric: tabular-nums;
+}
+.rf-guided .rf-form {
+  padding-top: 0;
+  gap: 24px;
+}
+.rf-lead {
+  margin: 0 0 4px;
+}
+
+.rf-screen.rf-guided .rf-input,
+.rf-screen.rf-guided .dg-field {
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 246, 230, 0.26);
+  border-radius: 12px;
+  background: rgba(255, 246, 230, 0.06);
+}
+.rf-screen.rf-guided .rf-input:focus,
+.rf-screen.rf-guided .dg-field:focus {
+  border-color: var(--glow);
+  box-shadow: 0 0 0 3px rgba(246, 201, 139, 0.16);
+}
+.rf-screen.rf-guided .rf-input[aria-invalid="true"] {
+  border-color: #f2a093;
+}
+.rf-screen.rf-guided .rf-textarea {
+  min-height: 96px;
+  line-height: 1.55;
+}
+
+.rf-hook {
+  margin: clamp(4px, 2dvh, 20px) 0 2px;
+  text-align: center;
+}
+.rf-hook__title {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 7.4vw, 2rem);
+  font-weight: 700;
+  line-height: 1.32;
+  color: var(--ivory);
+  text-wrap: balance;
+}
+.rf-hook__sub {
+  margin: 0 auto;
+  max-width: 30ch;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--glow);
+  text-wrap: balance;
+}
+
+.rf-intro .rf-top {
+  position: absolute;
+  top: max(8px, var(--safe-top));
+  left: 22px;
+  z-index: 2;
+  height: auto;
+}
+.rf-intro .rf-main {
+  position: relative;
+  padding-top: max(8px, var(--safe-top));
+}
+.rf-intro .rf-form {
+  gap: 16px;
+}
+.rf-intro .rf-hook {
+  margin-top: 34px;
+}
+.rf-intro .rf-hook__title {
+  margin-bottom: 8px;
+}
+
+.rf-intro .rf-submit {
+  position: sticky;
+  bottom: 0;
+  margin: 0 -22px;
+  padding: 28px 22px max(14px, var(--safe-bottom));
+  background: linear-gradient(180deg, rgba(20, 16, 24, 0) 0%, #141018 42%);
+}
+.rf-intro .rf-main {
+  padding-bottom: 0;
+}
+
+.rf-ritual__dust {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.rf-ritual__bgdust {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.rf-ritual__stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 168px;
+  padding: 0 16px;
+}
+
+.rf-ritual__rings {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(300px, 82vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+  background: radial-gradient(closest-side, rgba(246, 201, 139, 0.16), rgba(246, 201, 139, 0) 72%);
+}
+.rf-ritual__rings[data-on="true"] {
+  opacity: 1;
+}
+.rf-ritual__rings::before,
+.rf-ritual__rings::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+.rf-ritual__rings::before {
+  inset: 6%;
+  border: 1px solid rgba(246, 201, 139, 0.3);
+  animation: rf-ritual-spin 70s linear infinite;
+  border-style: dashed;
+}
+.rf-ritual__rings::after {
+  inset: 22%;
+  border: 1px solid rgba(246, 201, 139, 0.22);
+  animation: rf-ritual-spin 110s linear infinite reverse;
+}
+@keyframes rf-ritual-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rf-ritual__rings::before,
+  .rf-ritual__rings::after {
+    animation: none;
+  }
+}

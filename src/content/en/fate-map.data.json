@@ -1,0 +1,496 @@
+{
+  "months": {
+    "at": "Around {month}",
+    "names": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "tag": { "caution": "Take care", "good": "Good month" },
+    "tone": {
+      "clashDay": "plans and promises with the people closest to you tend to slip out of sync",
+      "clashMonth": "your role and standing at work or in groups tend to feel unsettled",
+      "harmonyDay": "it tends to be easy to join hands with someone close to you",
+      "harmonyMonth": "good people and fitting work tend to gather in one place at work or in your circles",
+      "clashYear": "it runs against the big current of that year, so plans tend to wobble once",
+      "harmonyYear": "it moves with the big current of that year, so what you have put off tends to come loose"
+    },
+    "prep": {
+      "clashDay": "Double-check plans and promises, and sleep on big decisions for a few days",
+      "clashMonth": "Put your role and your limits into words ahead of time",
+      "harmonyDay": "Bring up the thing or the favor you have been holding back, within this month",
+      "harmonyMonth": "Show up at one more gathering or introduction",
+      "clashYear": "Leave room in that month's schedule, and decide ahead of time what you can move",
+      "harmonyYear": "Pick one thing you have put off and time its start for this month"
+    },
+    "both": "Your chart and the current of that year point the same way, so it stands out more."
+  },
+  "kindTag": {
+    "crisis": "Rough patch",
+    "chance": "Open window",
+    "shift": "Turning point",
+    "flow": "Change"
+  },
+  "year": {
+    "crisis": {
+      "peer": "an easy year to feel hurt over sharing and credit",
+      "output": "an easy year to wear yourself out pouring out ideas and effort",
+      "wealth": "an easy year for money and chances to slip through",
+      "power": "an easy year to feel weighed down by heavy duties and work",
+      "resource": "an easy year to lose touch with help and struggle alone"
+    },
+    "chance": {
+      "peer": "a great year for people to gather and join hands with you",
+      "output": "a great year for your skills and voice to be noticed",
+      "wealth": "a year when money and practical chances come within reach",
+      "power": "a year when your work easily earns recognition",
+      "resource": "a year when learning and steady support come easily"
+    },
+    "flow": {
+      "peer": "a year for resetting boundaries and sharing roles with others",
+      "output": "a year when your skills and voice start reaching outward",
+      "wealth": "a year when money and chances start shifting around",
+      "power": "a year when the weight of your work and duties changes",
+      "resource": "a year for learning, resting, and finding a place to lean"
+    },
+    "clashDay": "an easy year for your personal space, home, or close bonds to feel unsteady",
+    "clashMonth": "an easy year for your workplace or outer standing to shift around",
+    "shift": "a threshold year marking a change in your ten-year chapter",
+    "chanceHarmony": "a year when good people and fitting work naturally come together",
+    "tipCrisis": {
+      "peer": "Try sorting out who handles what in words ahead of time",
+      "output": "Set aside rest time first when pouring your effort out",
+      "wealth": "Try keeping a quick note of money coming in and going out",
+      "power": "Try narrowing down the scope of what you agree to take on",
+      "resource": "Pick someone you trust to turn to instead of holding it all in"
+    },
+    "tipChance": {
+      "peer": "Try welcoming one more person to join your circle",
+      "output": "Try putting your skills out where others can see them",
+      "wealth": "Test incoming opportunities in small ways first",
+      "power": "Keep visible records of the work you deliver",
+      "resource": "Actively look for things to learn and places that offer help"
+    },
+    "tipFlow": {
+      "peer": "Focus on noting your own part instead of comparing",
+      "output": "Polish what you already do rather than starting fresh projects",
+      "wealth": "Protect your current rhythm rather than expanding too fast",
+      "power": "If responsibilities grow, build in more rest days to match",
+      "resource": "Try using at least one thing you learned while taking breaks"
+    },
+    "tipClashDay": "Double-check commitments around home, work, and close bonds",
+    "tipClashMonth": "Take time to organize your workplace roles and connections",
+    "tipShift": "Try not to rush or delay big decisions right around the shift month",
+    "tipChanceHarmony": "Meet casually first with people or projects that reach out to you",
+    "label": {
+      "thisYear": "{year} · This year",
+      "nextYear": "{year} · Next year",
+      "other": "{year}"
+    }
+  },
+  "talk": {
+    "years": {
+      "leadNamed": "{name}, let’s look at the next five years first.",
+      "leadPlain": "Let’s look at the next five years first.",
+      "label": {
+        "thisYear": "This year",
+        "nextYear": "Next year",
+        "other": "{year}"
+      },
+      "says": "{label} is {title}.",
+      "monthSays": "{label}, around {month}, {tone}.",
+      "more": "There is more coming this year and next, and {n} more years on the list. I’ll tell you about it in the inner room.",
+      "fix": "For any year that looks rough, I’ll show you how to get through it in the full reading. Count on it."
+    },
+    "partner": {
+      "lead": "Lastly, here is the kind of person likely to cross your path.",
+      "vibe": "When you are together, they tend to be {vibe}.",
+      "more": "I’ll tell you where you might cross paths, and what helps you keep the connection close."
+    },
+    "flow": {
+      "lead": "Now let’s look at how your flow shifts across your life chapters.",
+      "now": "Right now, you are in a season of {theme}. {tail}",
+      "next": "I’ve also marked when your next chapter opens and what changes with it.",
+      "more": "I’ll show you when your easiest stretches arrive and when to pace yourself in the inner room."
+    }
+  },
+  "stageLabel": {
+    "early": "Early years",
+    "youth": "Young adulthood",
+    "middle": "Middle years",
+    "late": "Later years"
+  },
+  "stageAges": {
+    "early": "Ages 0 to 19",
+    "youth": "Ages 20 to 39",
+    "middle": "Ages 40 to 59",
+    "late": "Ages 60 and on"
+  },
+  "levelWord": {
+    "high": "When the tide favors you",
+    "mid": "An even season",
+    "low": "A time to conserve strength"
+  },
+  "partner": {
+    "keys": {
+      "vibe": "Being around them",
+      "temper": "Temperament",
+      "meet": "Where paths cross"
+    },
+    "vibe": {
+      "peer": "a companion who walks right beside you as an equal",
+      "output": "someone whose words and wit brighten the room",
+      "wealth": "someone grounded and practical who looks after what matters",
+      "power": "a steady presence who keeps you anchored",
+      "resource": "someone gentle who checks in on your feelings first"
+    },
+    "temper": {
+      "wood": "An upright, gently growing disposition",
+      "fire": "A warm, bright, and lively temperament",
+      "earth": "An unhurried, reassuring nature",
+      "metal": "A neat presence with clear boundaries",
+      "water": "A quiet depth that keeps thoughts close"
+    },
+    "meet": {
+      "peer": "Spaces where people study, work, or train side by side",
+      "output": "Shared hobbies, interest groups, or lively social gatherings",
+      "wealth": "Practical settings where money, business, or everyday plans are handled",
+      "power": "Within a structured workplace or formal organization",
+      "resource": "Mentorship circles, classrooms, or through trusted introductions"
+    },
+    "types": {
+      "resource-bright": {
+        "name": "Gentle Puppy",
+        "who": "Someone warm who steps forward to check on you",
+        "look": "Round, soft-cornered eyes with an open smile and a gentle jawline stand out first.",
+        "ease": "Even when words do not come easily, their eyes check on you first, easing the tension around you.",
+        "care": "Looking after others is a habit, so their own needs easily slip behind. It helps to say thank you often."
+      },
+      "resource-quiet": {
+        "name": "Gentle Deer",
+        "who": "Someone who stays quietly by your side, watching over you",
+        "look": "Clear, wide eyes, a slender face, and a calm, quiet gaze leave a lasting impression.",
+        "ease": "They tend not to rush you, giving you space and time to sort through your thoughts.",
+        "care": "Their easy pace means decisions can get pushed back. Agreeing on a date together helps for anything important."
+      },
+      "power-bright": {
+        "name": "Crisp and Defined",
+        "who": "Someone who sets a direction and leads the way",
+        "look": "Distinct eyelids, defined brows, a deep gaze, and a prominent bridge catch your eye at once.",
+        "ease": "They point the way at crossroads, giving you something steady to lean on when you hesitate.",
+        "care": "Because their boundaries are firm, their tone can sound blunt. Clearing up little hurts before the day ends tends to work best."
+      },
+      "power-quiet": {
+        "name": "Clean and Mild",
+        "who": "Someone reliable who supports you from behind",
+        "look": "Uncluttered, understated features with straight brows give off an orderly, calm look.",
+        "ease": "They keep commitments without making a fuss, making it easy to relax the longer you know them.",
+        "care": "Since they show very little on the surface, reading their mood can take effort. It helps to put your gratitude into words."
+      },
+      "output-bright": {
+        "name": "Feline Spark",
+        "who": "Someone who brightens any gathering with quick wit",
+        "look": "Slightly upturned outer corners of the eyes and a playful smirk give this face its signature look.",
+        "ease": "Conversation rarely runs dry with them, and awkward moments soften without effort.",
+        "care": "Their moods shift quickly, which can make plans seem casual. Double-checking important dates keeps things clear."
+      },
+      "output-quiet": {
+        "name": "Sleek Fox",
+        "who": "Someone of few words with deep emotional resonance",
+        "look": "Long, sleek eyes, a slender jaw, and a cool, observant presence set the tone.",
+        "ease": "Even brief remarks hold genuine weight, leaving quiet conversations that linger with you.",
+        "care": "It takes time for them to open up. Rather than pressing for answers, staying nearby lets them warm up on their own."
+      },
+      "peer": {
+        "name": "Playful Bunny",
+        "who": "Someone comfortable who meets you eye to eye",
+        "look": "Round eyes, a neat little nose, and a bright smile greet you first.",
+        "ease": "They tend not to compare or keep score, meeting you at your level so you can just be yourself.",
+        "care": "The closer you get, the easier it is to blur lines. Naming shared expectations around time or money early on helps."
+      },
+      "wealth": {
+        "name": "Bright Squirrel",
+        "who": "Someone sharp who knows how to keep things in order",
+        "look": "Sparkling, attentive eyes and slightly rounded cheeks give off a quick, capable impression.",
+        "ease": "They manage daily life with care, bringing an orderly, dependable feel to the routine.",
+        "care": "Being quick with practical details can sometimes read as calculating. Speaking your appreciation aloud clears up any misunderstanding."
+      }
+    },
+    "faces": {
+      "label": "Choose portrait style",
+      "f": "Woman",
+      "m": "Man"
+    },
+    "typeKeys": {
+      "ease": "Why you feel at ease",
+      "care": "How to keep them close"
+    },
+    "alt": "Sample portrait of the {name} impression"
+  },
+  "flow": {
+    "theme": {
+      "peer": "standing alongside peers and securing your footing",
+      "output": "putting your voice and talents out into the open",
+      "wealth": "reaching for new opportunities and seeing real results",
+      "power": "settling into your role and taking on more responsibility",
+      "resource": "learning, accepting support, and replenishing from within"
+    },
+    "nowTail": {
+      "high": "The current is leaning in your favor, so it is well worth taking a step forward.",
+      "mid": "There are no major swings right now, so steadily tending to your ground works best.",
+      "low": "Rather than rushing, it helps to protect what matters and move at your own pace."
+    }
+  },
+  "drawers": {
+    "lead": "I left three drawers cracked open by the door. Just a peek inside for now.",
+    "hiddenSr": "Hidden text",
+    "years": {
+      "head": {
+        "named": "Turning points and openings ahead for {name}",
+        "plain": "Turning points and openings ahead for you"
+      },
+      "sub": "The next five years. This year and next, just one thing each for now.",
+      "more": "The rest of this year and next, and the {n} hidden years, open in the inner room.",
+      "fix": "The way through this rough patch is in the full reading. Count on it."
+    },
+    "flow": {
+      "head": {
+        "named": "Life rhythm across chapters for {name}",
+        "plain": "Life rhythm across chapters for you"
+      },
+      "sub": "From your early years to later life, see at a glance which chapters welcome you and which ask for patience.",
+      "locked": "Here’s just a glimpse of the shape for now.",
+      "here": "You are here",
+      "more": "I’ll lay out the highs, lows, and what to keep in mind for each chapter in the inner room."
+    },
+    "partner": {
+      "head": {
+        "named": "The shape of connections drawn to {name}",
+        "plain": "The shape of connections drawn to you"
+      },
+      "sub": "Their face is still out of focus. Let’s start with their nature, piece by piece.",
+      "more": "We’ll fill in the rest of their outline, and how to feel at ease together, in the inner room."
+    }
+  },
+  "paid": {
+    "eyebrow": "Laid out for you before the full reading",
+    "intro": "Here are the three cards that were blurred in your preview. They are fully open now. The reading below unpacks them from the very same chart.",
+    "years": {
+      "head": "The next five years: turning points and openings",
+      "sub": "One line for each year, every notable month with what tends to happen and how to prepare, and one small action to carry you through. The months that were blurred in your preview are all open now.",
+      "tipLabel": "Something to try",
+      "fixLabel": "How to get through it",
+      "prepLabel": "Prepare",
+      "noMonths": "No month this year stands out as clashing or fitting. It tends to run without big waves.",
+      "focusLabel": "The month that stands out most",
+      "chipsLabel": "Notable months this year",
+      "yearOnlyLabel": "Months that stand out only because of this year",
+      "recurHead": "Months that come back every year",
+      "recurNote": "A month that stands out because of your own chart is set by the month itself, so it returns as the years change. Months that stand out only because of a particular year change every year, so they are written under that year above."
+    },
+    "flow": {
+      "head": "The flow of life, chapter by chapter",
+      "sub": "A map across ten-year chapters showing which seasons welcome you and which ask for care.",
+      "here": "You are here",
+      "best": "The most welcoming chapter spans ages {a} to {b} ({y1} to {y2}).",
+      "hardest": "The chapter where it helps to pace yourself spans ages {a} to {b} ({y1} to {y2}).",
+      "even": "The shifts between chapters stay fairly gentle, flowing steadily rather than swinging all at once.",
+      "next": {
+        "head": "The doorstep to the next chapter",
+        "whenMonth": "{month} {year}",
+        "whenYear": "{year}",
+        "open": "The next chapter opens around {when}.",
+        "openFirst": "Your first chapter opens around {when}.",
+        "dir": {
+          "up": "The tide runs a clear step higher than it does now.",
+          "down": "The tide runs a clear step lower than it does now.",
+          "same": "It carries on at about the pace you have now."
+        },
+        "prepLabel": "Prepare",
+        "prep": {
+          "up": "Get ready to pull out one of the things you have been putting off",
+          "down": "Trim new ventures and write down what you want to protect",
+          "same": "Lay one more layer of groundwork under what you already do"
+        },
+        "firstPrep": "Pick one thing to learn and build up before the first chapter opens"
+      },
+      "stageHead": "What to look after in each season",
+      "stageFocus": {
+        "early": "A season of learning, leaning on others and building a base",
+        "youth": "A season of finding your place between work and people",
+        "middle": "A season of keeping and widening what you carry",
+        "late": "A season of sharing what you built and choosing your pace"
+      },
+      "pace": {
+        "high": "The tide is with you, so pull out one thing you have put off",
+        "mid": "No big swings, so build steadily",
+        "low": "Protect what you have before starting something new"
+      }
+    },
+    "partner": {
+      "head": "The shape of connections drawn near",
+      "sub": "This disposition is read from the branch of your birth day and month. It applies to romantic bonds as well as anyone you keep close over the long haul.",
+      "when": {
+        "head": "When it tends to reach you",
+        "work": "Around {when}: good people tend to stand out at work or in your circles.",
+        "close": "Around {when}: it tends to be easy to click with someone close to you.",
+        "none": "No month in the next five years stands out as a fit. Meet people slowly, in the places above.",
+        "recur": "The same months come back every year."
+      }
+    },
+    "calendar": {
+      "head": "The next twelve months at a glance",
+      "sub": "Twelve months starting with this one, on a single page. Tap a month for its one line. The reading below follows this calendar month by month, in more depth.",
+      "tag": { "good": "Open up", "caution": "Go easy", "even": "Calm" },
+      "detail": {
+        "harmonyDay": "A month when it tends to be easy to click with someone close. That thing you keep rehearsing in your head? Say it out loud.",
+        "harmonyMonth": "A month when good people tend to stand out at work or in groups. Stay home and you will waste it.",
+        "clashDay": "A month when plans and promises with people close to you tend to wobble. Swallow the snippy comment once before it leaves your mouth.",
+        "clashMonth": "A month when your spot at work or in a group tends to make you oddly touchy. Taking it out on a date is a bad trade.",
+        "even": "No big waves this month, so your usual habits show up in full. A great month to untie one knot.",
+        "clashYear": "A month that runs against the big current of the year. A plan you have set can wobble once, so leave room in your schedule.",
+        "harmonyYear": "A month that moves with the big current of the year. A good month to line up a message or a meeting you have been putting off."
+      },
+      "prepLabel": "Prepare",
+      "prep": {
+        "harmonyDay": "Bring up the thing or the favor you have been holding back, within this month",
+        "harmonyMonth": "Go to one more gathering or introduction",
+        "clashDay": "Double-check promises, and let a hurt remark sit for a day before you say it",
+        "clashMonth": "Put your role and limits into words, and do not take a touchy mood out on someone close",
+        "even": "Pick one habit and change it, just for this month",
+        "clashYear": "Leave room around promises and plans, and decide ahead of time what can move",
+        "harmonyYear": "Pick one message or meeting you have put off and set it for this month"
+      },
+      "label": "{month} {year}",
+      "short": "{month}"
+    },
+    "lantern": {
+      "head": "Eight lanterns along the night river",
+      "sub": "Each ten-year chapter is one lantern. Chapters behind you burn low, the chapter you are in burns brightest, and the ones ahead glow by how kindly the tide runs. Tap a lantern.",
+      "tag": { "past": "A chapter behind you", "now": "The chapter you are in" },
+      "title": "Chapter {n} · ages {a} to {b}",
+      "ages": "{a} to {b}",
+      "years": "{y1} to {y2}",
+      "line": {
+        "past": "A chapter of {theme}. Its lantern now burns low.",
+        "now": "A chapter of {theme}. {tail}",
+        "next": "A chapter of {theme} lies ahead. {tail}"
+      },
+      "tail": {
+        "high": "The current is on your side, so one more step forward is worth it.",
+        "mid": "There are no big swings here, so steady groundwork pays off.",
+        "low": "Rather than rushing, protect what matters and go at your own pace."
+      },
+      "open": {
+        "done": "It opened around {when}.",
+        "next": "It opens around {when}."
+      },
+      "prepLabel": "Prepare",
+      "prep": {
+        "high": "Start one thing you have been putting off",
+        "mid": "Add one more layer of groundwork to what you already do",
+        "low": "Trim new ventures and write down what to protect"
+      }
+    },
+    "heat": {
+      "head": "The heat of your twelve months",
+      "sub": "Your twelve months of 2027, measured against each other. The month you pick glows in the sky at the center. Tap a lantern, or a month below.",
+      "level": { "blaze": "A bright month", "warm": "A warm month", "calm": "A quiet month", "cool": "A month to catch your breath" },
+      "turn": { "rise": "The month it lights up", "fall": "The month it settles down" },
+      "line": {
+        "blaze": "One of the months when the tide runs most in your favor. A good month to pull out what you have been putting off.",
+        "warm": "The tide runs warmly with you. One more step on what you are already doing is worth it.",
+        "calm": "No big swings this month. Steady groundwork, done the way you usually do it, pays off.",
+        "cool": "One of your months for catching your breath. Rather than starting something new, keep what you have."
+      },
+      "turnLine": {
+        "rise": "The tide climbs a clear step above last month. This is where the mood starts to turn.",
+        "fall": "The tide drops a clear step below last month. This is where it pays to save your strength."
+      },
+      "lichun": "Lichun, the Start of Spring, falls early this month. In this reading, the new year truly begins here.",
+      "tone": {
+        "clashDay": "A month when plans and promises with people close to you tend to slip out of sync.",
+        "clashMonth": "A month when your role and standing at work or in groups tend to feel unsettled.",
+        "harmonyDay": "A month when it tends to be easy to join hands with someone close to you.",
+        "harmonyMonth": "A month when good people and fitting work tend to gather in one place.",
+        "clashYear": "A month that runs against the big current of the year, so plans tend to wobble once.",
+        "harmonyYear": "A month that moves with the big current of the year, so what you have put off tends to come loose."
+      },
+      "prepLabel": "Prepare",
+      "prep": {
+        "blaze": "Pull out one thing you have been putting off and start it this month",
+        "warm": "Add one more step to what you already do",
+        "calm": "Keep laying groundwork the way you usually do",
+        "cool": "Protect what you have before starting something new"
+      }
+    },
+    "band": {
+      "head": "Seven years when love may open",
+      "sub": "Seven lanterns on a red thread are your next seven years, read from the seat of your closest bond and the seat of the people around you. Tap a lantern to see what to look at that year.",
+      "level": { "open": "A year your heart opens", "warm": "A year people warm to you", "steady": "A quiet year of settling in", "tender": "A year your heart runs tender" },
+      "best": "Widest open",
+      "line": {
+        "open": "A year when the seat of your closest bond is in harmony. Saying how you feel tends to land.",
+        "warm": "A year when your work and social circles warm up. Good people tend to stand out.",
+        "steady": "A calm year with no big swings. A good year to fix one habit in the bond you already have.",
+        "tender": "A year when close bonds or your social circle tend to wobble. Do not stack up hurt feelings; let them out lightly."
+      },
+      "prepLabel": "Prepare",
+      "prep": {
+        "open": "Make one place this year where you can put your feelings into words",
+        "warm": "Open up one or two more circles at work or in groups",
+        "steady": "Pick one habit in the bond you already have and work on it",
+        "tender": "Do not stack up hurt feelings; let them out lightly as they come"
+      },
+      "themeLabel": "What to look at",
+      "theme": {
+        "peer": "meeting each other at eye level",
+        "output": "putting your feelings into words",
+        "wealth": "weighing time together and shared living",
+        "power": "weighing the weight of promises and responsibility",
+        "resource": "finding where to lean and be leaned on"
+      },
+      "label": "{year} · age {age}"
+    },
+    "match": {
+      "elements": {
+        "head": "Your two elements: overlap and balance",
+        "sub": "Gold is you, silver is the other person. For each element we compared how many characters each of you holds. Tap an element to see how the two of you meet there.",
+        "me": "You",
+        "you": "Them",
+        "name": { "wood": "Wood", "fire": "Fire", "earth": "Earth", "metal": "Metal", "water": "Water" },
+        "link": { "overlap": "Overlap", "meFills": "You fill it", "youFills": "They fill it", "none": "Similar" },
+        "line": {
+          "overlap": "You both carry plenty of {el} (you {me}, them {you}). Being the same kind makes it easy to click, and also easy to lean the same way together.",
+          "meFills": "{el} is missing for them and present in you (you {me}, them {you}). It is an element you can supply.",
+          "youFills": "{el} is missing for you and present in them (you {me}, them {you}). It is an element they can supply.",
+          "none": "You both hold a similar amount of {el} (you {me}, them {you}). Neither overlapping much nor lacking."
+        }
+      },
+      "together": {
+        "head": "The months that suit you both",
+        "sub": "We worked out the next twelve months from each of your charts. A month where gold and silver light up together is a month that suits you both.",
+        "me": "You",
+        "you": "Them",
+        "kind": { "both": "A month for you both", "one": "A month for one of you", "care": "A month to go gently together", "even": "A quiet month" },
+        "summary": { "some": "{n} months suit you both.", "none": "No month lines up exactly. Reach out to each other in the months that suit one of you." },
+        "line": {
+          "both": "The tide runs your way for you both. A good month to try something together.",
+          "one": "The tide runs for {who} only. It helps if the one it favors reaches out first.",
+          "care": "Plans and promises tend to slip for you both. Check once more with each other before big decisions.",
+          "even": "No big waves this month. Walk side by side the way you usually do."
+        },
+        "side": "{who}: {tone}.",
+        "sideTone": {
+          "clashDay": "plans and promises with people close tend to slip out of sync",
+          "clashMonth": "role and standing at work or in groups tend to feel unsettled",
+          "harmonyDay": "it tends to be easy to click with someone close",
+          "harmonyMonth": "good people and fitting work tend to gather at work or in groups"
+        },
+        "prepLabel": "Prepare",
+        "prep": {
+          "both": "Pick one thing you have wanted to do together and set a date this month",
+          "one": "The one the tide favors reaches out first; the other meets them halfway",
+          "care": "Check big decisions and promises with each other once more, and let hurt remarks sit for a day",
+          "even": "Choose one thing you already do together and keep it steady"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,578 @@
+/*
+  신비 효과 전용 스타일(MysticDust, InkBloom, RevealText, GlyphRise, GateBloom).
+  globals.css 의 토큰만 쓰고 색을 새로 만들지 않는다: 금빛 --glow, 호박색 --glow-deep, 먹 --ink, 한지 --paper, 번짐 바탕 --mist-rgb.
+  이름 앞에 mx- 를 붙여 충돌을 피한다(CSS Modules 는 못 쓴다: result.css 머리말 참고).
+  움직임은 transform·opacity 와 작은 요소의 filter 만 쓴다. 먹 번짐의 mask-size 만 예외로, 한 번 1.1초 동안만 돌고 끝나면 mask 를 뗀다.
+  모든 효과는 prefers-reduced-motion 에서 애니메이션 없이 곧바로 최종 상태다(문빛 번짐만 화면을 덮는 전환이라 짧은 페이드).
+*/
+
+/* ---------- 금빛 먼지 ---------- */
+
+/* where() 로 명시도를 0 으로: 부르는 쪽 className(fixed, inset-0 등)이 이긴다 */
+:where(.mx-dust) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.mx-dust {
+  display: block;
+}
+
+/* ---------- 공통 ---------- */
+
+@keyframes mx-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---------- 먹 번짐 ---------- */
+
+/*
+  먹 얼룩 세 겹(logic.ts INK_BLOTS: 로브와 번진 가지, 가장자리 떨림, 앞서 튄 방울이 있는 시드 고정 모양)을 mask-image 로 깔고 mask-size 를 키운다.
+  둥근 조명 원이 아니라 먹이 종이에 번지는 모양이다. SVG 데이터 주소를 마스크로 쓰는 방식이라 iOS Safari 15.4+(접두사 -webkit- 는 그 아래)에서도 돈다.
+  마스크를 못 쓰는 브라우저는 아래 @supports 밖의 기본값인 단순 페이드로 물러난다.
+  이 구간은 tests/mystic.test.ts 가 logic.ts 의 inkBlotCssBlock() 과 같은지 검사한다. 얼룩을 바꾸면 그 출력으로 바꾼다.
+*/
+.mx-ink-body,
+.mx-ink-stain {
+  /* mx-blots:begin */
+  --mx-blot-1: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpath id='b' d='M76,49.3Q75.7,50 75.4,50.7Q75.1,51.4 74.8,52.1Q74.5,52.8 74.5,53.5Q74.5,54.2 74.5,54.9Q74.6,55.6 74.3,56.3Q74.1,57 73.9,57.6Q73.6,58.3 73.4,58.9Q73.1,59.6 72.7,60.1Q72.2,60.7 71.7,61.2Q71.2,61.7 71.2,62.5Q71.1,63.2 71.1,64.1Q71.2,65 71.1,65.9Q70.9,66.7 70.8,67.6Q70.7,68.5 70.7,69.6Q70.7,70.7 70.5,71.7Q70.4,72.8 70,73.7Q69.6,74.6 68.9,75.1Q68.2,75.6 67.2,75.7Q66.2,75.7 65.3,75.9Q64.4,76 63.8,76.7Q63.2,77.4 62.6,78.1Q62,78.9 61.3,79.5Q60.5,80.1 59.8,80.7Q59,81.3 58.2,81.8Q57.3,82.2 56.4,82.1Q55.4,82 54.5,81.7Q53.5,81.4 52.6,81.3Q51.8,81.2 50.9,81Q50,80.8 49.2,80.3Q48.3,79.7 47.6,78.9Q46.8,78 46.2,76.9Q45.6,75.8 45.1,74.8Q44.6,73.8 44,73.2Q43.5,72.6 43,72.1Q42.4,71.6 42,71Q41.5,70.5 41,70.1Q40.5,69.8 39.8,69.7Q39.2,69.6 38.7,69.2Q38.1,68.9 37.7,68.5Q37.2,68 36.6,67.8Q36,67.6 35.4,67.3Q34.8,67 34.3,66.6Q33.7,66.3 33.1,66Q32.5,65.7 31.7,65.4Q31,65.2 30.2,64.9Q29.4,64.6 28.6,64.3Q27.8,63.9 27.4,63.3Q27,62.7 27,61.9Q27,61.1 26.9,60.3Q26.8,59.6 26.3,59.1Q25.7,58.5 25.2,57.9Q24.7,57.3 24.2,56.6Q23.8,56 23.1,55.3Q22.5,54.7 22,53.9Q21.4,53.2 21.2,52.4Q21,51.6 20.8,50.8Q20.6,50 20.4,49.2Q20.1,48.3 19.9,47.5Q19.7,46.6 19.5,45.7Q19.4,44.8 19.5,43.9Q19.6,43.1 20,42.3Q20.4,41.5 20.9,40.7Q21.3,40 21.6,39.2Q22,38.4 22.7,37.8Q23.5,37.2 24.5,36.8Q25.5,36.4 26.2,35.9Q26.8,35.4 27.2,34.8Q27.7,34.1 28.1,33.5Q28.6,32.9 29,32.3Q29.5,31.7 30,31.1Q30.6,30.6 31.4,30.3Q32.1,30 33,29.9Q33.9,29.8 34.7,29.7Q35.5,29.6 36.3,29.5Q37,29.3 37.6,29Q38.2,28.6 38.6,28Q39.1,27.4 39.7,27.1Q40.4,26.8 41.1,26.8Q41.9,26.9 42.6,26.8Q43.3,26.7 43.9,26.4Q44.6,26.1 45.2,26.1Q45.9,26.1 46.6,26.1Q47.3,26.1 48,25.9Q48.6,25.7 49.3,25.5Q50,25.2 50.7,24.9Q51.4,24.7 52.2,24.4Q52.9,24.1 53.7,24Q54.4,23.9 55.2,24Q55.9,24.1 56.7,24.2Q57.4,24.4 58.1,24.7Q58.7,25.1 59.3,25.6Q59.9,26.1 60.6,26.3Q61.3,26.6 62,26.7Q62.8,26.9 63.3,27.5Q63.8,28.1 64.1,28.9Q64.4,29.8 64.8,30.3Q65.2,30.9 65.9,31.2Q66.6,31.5 67.5,31.5Q68.4,31.6 69.6,31.5Q70.8,31.4 72.1,31.4Q73.4,31.4 74.5,31.6Q75.7,31.8 76.6,32.3Q77.5,32.7 77.9,33.5Q78.4,34.3 78.2,35.4Q78.1,36.5 77.8,37.5Q77.6,38.6 77.4,39.5Q77.2,40.5 76.8,41.5Q76.3,42.4 76,43.3Q75.6,44.2 75.7,44.9Q75.8,45.6 76.1,46.3Q76.4,47 76.3,47.8Q76.3,48.5 76,49.3Z'/%3E%3C/defs%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.07' stroke-width='8' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.12' stroke-width='5.6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.2' stroke-width='3.6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.32' stroke-width='2' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='%23000'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='31.8' cy='11.3' r='2.1'/%3E%3Ccircle cx='82.4' cy='32.5' r='1.9'/%3E%3Ccircle cx='68.5' cy='86.2' r='1.2'/%3E%3Ccircle cx='94.4' cy='55.7' r='0.8'/%3E%3Ccircle cx='22' cy='80.2' r='1.3'/%3E%3Ccircle cx='91' cy='35.6' r='1.8'/%3E%3Ccircle cx='31.9' cy='82.6' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
+  --mx-blot-2: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpath id='b' d='M74.5,49.3Q74.2,50 73.7,50.7Q73.2,51.3 72.8,51.9Q72.3,52.5 71.8,53.1Q71.2,53.6 70.6,54.1Q70,54.6 69.6,55Q69.2,55.5 69.2,56.1Q69.1,56.7 69,57.2Q68.8,57.8 68.5,58.3Q68.2,58.8 68.2,59.4Q68.1,60 68.2,60.7Q68.2,61.4 68,62Q67.8,62.6 67.4,63.1Q67.1,63.6 66.6,64Q66.2,64.5 65.7,64.8Q65.2,65.2 64.9,65.7Q64.5,66.3 64.3,67Q64.1,67.7 63.9,68.4Q63.6,69.1 63.2,69.8Q62.9,70.5 62.5,71.3Q62.2,72.1 61.6,72.5Q61.1,73 60.4,73.2Q59.7,73.4 59.1,73.8Q58.5,74.2 57.9,74.7Q57.3,75.2 56.6,75.5Q55.9,75.7 55.1,75.8Q54.4,75.9 53.7,76.1Q53,76.3 52.2,76.4Q51.5,76.6 50.7,76.9Q50,77.1 49.2,77.4Q48.4,77.6 47.7,77.7Q46.9,77.7 46.1,77.9Q45.2,78 44.3,78.5Q43.4,79 42.4,79.4Q41.4,79.8 40.6,79.5Q39.8,79.2 39.2,78.4Q38.6,77.6 38.2,76.5Q37.8,75.4 37.6,74.1Q37.4,72.8 37,72Q36.7,71.1 36,71Q35.2,70.8 34.1,71Q33.1,71.2 31.8,71.5Q30.6,71.7 29.6,71.6Q28.5,71.5 27.9,70.9Q27.4,70.2 27.4,69.1Q27.3,68.1 27.4,67Q27.5,65.9 27.7,64.9Q27.8,63.9 28.1,63Q28.3,62 28.3,61.2Q28.3,60.5 28,59.8Q27.8,59.2 27.6,58.5Q27.5,57.9 27.4,57.2Q27.3,56.5 26.9,55.9Q26.5,55.4 26.2,54.7Q25.9,54.1 25.7,53.4Q25.6,52.7 25.6,52.1Q25.5,51.4 25.5,50.7Q25.5,50 25.5,49.3Q25.5,48.6 25.5,47.9Q25.4,47.2 25.5,46.5Q25.7,45.9 26.2,45.3Q26.8,44.7 27.3,44.2Q27.8,43.6 28,43Q28.1,42.4 28.3,41.7Q28.5,41.1 28.7,40.5Q28.9,39.9 29,39.2Q29.1,38.5 29.3,37.8Q29.6,37.2 30.1,36.7Q30.7,36.3 31.3,35.9Q31.9,35.6 32.5,35.2Q33,34.8 33.6,34.5Q34.1,34.1 34.5,33.7Q35,33.2 35.4,32.8Q35.9,32.3 36.5,32Q37,31.7 37.5,31.3Q38,30.9 38.4,30.3Q38.8,29.7 39.3,29.2Q39.8,28.8 40.5,28.7Q41.1,28.6 41.8,28.5Q42.4,28.3 43,28.1Q43.6,27.9 44.3,27.8Q44.9,27.7 45.5,27.5Q46.1,27.3 46.8,27Q47.4,26.8 48,26.6Q48.7,26.5 49.3,26.5Q50,26.5 50.7,26.4Q51.3,26.4 52,26.4Q52.7,26.5 53.3,26.3Q54,26.2 54.8,25.9Q55.6,25.6 56.3,25.6Q57,25.6 57.6,26.1Q58.2,26.6 58.7,27.1Q59.3,27.6 59.9,27.9Q60.5,28.3 61,28.7Q61.5,29.2 62,29.7Q62.5,30.1 63.1,30.3Q63.8,30.6 64.5,30.8Q65.1,31 65.9,31.2Q66.6,31.5 67.4,31.6Q68.2,31.8 69,32.1Q69.8,32.3 70.4,32.8Q71.1,33.2 71.7,33.7Q72.4,34.1 72.8,34.8Q73.2,35.4 73.4,36.2Q73.6,36.9 74,37.6Q74.4,38.2 75,38.8Q75.6,39.4 75.9,40.1Q76.2,40.8 76.2,41.6Q76.1,42.5 76.1,43.3Q76,44.1 75.8,44.9Q75.7,45.6 75.4,46.4Q75.2,47.2 75,47.9Q74.8,48.6 74.5,49.3Z'/%3E%3C/defs%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.07' stroke-width='8' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.12' stroke-width='5.6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.2' stroke-width='3.6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.32' stroke-width='2' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='%23000'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='68.4' cy='88.7' r='0.7'/%3E%3Ccircle cx='6.5' cy='55.6' r='1.4'/%3E%3Ccircle cx='58.2' cy='89.1' r='1.8'/%3E%3Ccircle cx='15.9' cy='37.9' r='1'/%3E%3Ccircle cx='42.3' cy='13.4' r='1.5'/%3E%3Ccircle cx='76.7' cy='24.1' r='1.8'/%3E%3C/g%3E%3C/svg%3E");
+  --mx-blot-3: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpath id='b' d='M72,49.4Q72,50 71.8,50.6Q71.6,51.2 71.3,51.8Q71.1,52.4 70.9,53Q70.8,53.5 70.8,54.1Q70.9,54.8 71.1,55.5Q71.4,56.2 71.6,56.9Q71.7,57.6 71.5,58.2Q71.3,58.8 71,59.4Q70.6,59.9 70.3,60.5Q70,61 69.5,61.5Q69,61.9 68.3,62.2Q67.7,62.5 67.1,62.9Q66.5,63.2 66,63.5Q65.5,63.9 65,64.2Q64.5,64.5 64.1,64.9Q63.7,65.3 63.3,65.8Q63,66.3 62.6,66.8Q62.2,67.2 61.8,67.7Q61.4,68.1 60.9,68.5Q60.4,68.8 59.8,69.1Q59.3,69.3 58.8,69.7Q58.3,70 57.9,70.7Q57.5,71.3 57,71.8Q56.4,72.4 55.8,72.6Q55.2,72.7 54.6,72.9Q53.9,73 53.3,73.3Q52.6,73.5 52,73.7Q51.3,73.9 50.7,74.1Q50,74.4 49.3,74.7Q48.6,75 47.9,75.2Q47.1,75.4 46.4,75.4Q45.7,75.4 45,75.2Q44.3,75 43.6,74.7Q43,74.3 42.4,73.9Q41.8,73.5 41.1,73.3Q40.5,73 39.9,72.7Q39.3,72.3 38.8,71.8Q38.3,71.2 37.7,70.8Q37.2,70.4 36.5,70.2Q35.8,70 35.3,69.5Q34.8,69.1 34.4,68.4Q34.1,67.8 34,67Q33.8,66.2 33.7,65.4Q33.7,64.6 33.7,63.8Q33.6,63.1 33.5,62.4Q33.3,61.8 33.1,61.3Q32.9,60.7 32.7,60.2Q32.5,59.7 32.2,59.2Q31.9,58.7 31.6,58.2Q31.4,57.7 31.2,57.2Q31.1,56.6 30.8,56.1Q30.4,55.6 29.8,55.2Q29.2,54.7 28.7,54.2Q28.3,53.7 28.1,53.1Q28,52.5 27.9,51.9Q27.8,51.2 27.7,50.6Q27.6,50 27.7,49.4Q27.8,48.8 27.9,48.1Q28.1,47.5 28.3,46.9Q28.5,46.4 28.8,45.8Q29.1,45.2 29.2,44.6Q29.3,44 29.3,43.4Q29.3,42.8 29.4,42.1Q29.6,41.5 29.6,40.9Q29.7,40.2 29.7,39.5Q29.7,38.8 29.8,38.1Q29.9,37.4 30.2,36.7Q30.4,36.1 30.4,35.2Q30.5,34.4 30.5,33.5Q30.5,32.6 30.8,31.8Q31.1,31.1 31.7,30.6Q32.3,30.2 33.1,30Q33.9,29.8 34.8,29.8Q35.6,29.7 36.3,29.6Q37.1,29.4 37.7,29.2Q38.3,28.9 39,28.7Q39.7,28.5 40.3,28.4Q41,28.2 41.6,27.9Q42.2,27.6 42.8,27.5Q43.5,27.3 44.1,27.2Q44.8,27.2 45.4,27Q46,26.7 46.7,26.3Q47.3,25.9 47.9,25.5Q48.6,25.2 49.3,24.9Q50,24.5 50.7,24Q51.5,23.5 52.3,22.8Q53.1,22.1 54,21.5Q55,20.8 55.9,20.4Q56.8,20 57.7,20.1Q58.6,20.2 59.3,20.7Q60.1,21.1 60.8,21.6Q61.5,22.1 62.2,22.7Q62.8,23.3 63.4,24.1Q63.9,24.9 64.3,25.7Q64.8,26.4 65.3,27.1Q65.7,27.8 66,28.7Q66.3,29.6 66.4,30.6Q66.5,31.5 66.8,32.3Q67,33 67.3,33.7Q67.6,34.3 67.9,34.9Q68.2,35.5 68.5,36.1Q68.8,36.7 69,37.3Q69.3,37.9 69.5,38.5Q69.8,39.1 70.2,39.6Q70.7,40 71,40.6Q71.4,41.1 71.5,41.8Q71.5,42.5 71.5,43.1Q71.5,43.8 71.6,44.4Q71.8,45 71.8,45.7Q71.9,46.3 71.8,46.9Q71.8,47.5 71.9,48.2Q72,48.8 72,49.4Z'/%3E%3C/defs%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.07' stroke-width='8' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.12' stroke-width='5.6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.2' stroke-width='3.6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.32' stroke-width='2' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='%23000'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='6.5' cy='33.8' r='1.5'/%3E%3Ccircle cx='74.3' cy='89.9' r='1.7'/%3E%3Ccircle cx='85.1' cy='64.9' r='0.8'/%3E%3Ccircle cx='63.2' cy='7.8' r='1.2'/%3E%3Ccircle cx='15.1' cy='39.4' r='2'/%3E%3Ccircle cx='16.1' cy='33.3' r='1.4'/%3E%3C/g%3E%3C/svg%3E");
+  --mx-ring-1: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpath id='b' d='M76,49.3Q75.7,50 75.4,50.7Q75.1,51.4 74.8,52.1Q74.5,52.8 74.5,53.5Q74.5,54.2 74.5,54.9Q74.6,55.6 74.3,56.3Q74.1,57 73.9,57.6Q73.6,58.3 73.4,58.9Q73.1,59.6 72.7,60.1Q72.2,60.7 71.7,61.2Q71.2,61.7 71.2,62.5Q71.1,63.2 71.1,64.1Q71.2,65 71.1,65.9Q70.9,66.7 70.8,67.6Q70.7,68.5 70.7,69.6Q70.7,70.7 70.5,71.7Q70.4,72.8 70,73.7Q69.6,74.6 68.9,75.1Q68.2,75.6 67.2,75.7Q66.2,75.7 65.3,75.9Q64.4,76 63.8,76.7Q63.2,77.4 62.6,78.1Q62,78.9 61.3,79.5Q60.5,80.1 59.8,80.7Q59,81.3 58.2,81.8Q57.3,82.2 56.4,82.1Q55.4,82 54.5,81.7Q53.5,81.4 52.6,81.3Q51.8,81.2 50.9,81Q50,80.8 49.2,80.3Q48.3,79.7 47.6,78.9Q46.8,78 46.2,76.9Q45.6,75.8 45.1,74.8Q44.6,73.8 44,73.2Q43.5,72.6 43,72.1Q42.4,71.6 42,71Q41.5,70.5 41,70.1Q40.5,69.8 39.8,69.7Q39.2,69.6 38.7,69.2Q38.1,68.9 37.7,68.5Q37.2,68 36.6,67.8Q36,67.6 35.4,67.3Q34.8,67 34.3,66.6Q33.7,66.3 33.1,66Q32.5,65.7 31.7,65.4Q31,65.2 30.2,64.9Q29.4,64.6 28.6,64.3Q27.8,63.9 27.4,63.3Q27,62.7 27,61.9Q27,61.1 26.9,60.3Q26.8,59.6 26.3,59.1Q25.7,58.5 25.2,57.9Q24.7,57.3 24.2,56.6Q23.8,56 23.1,55.3Q22.5,54.7 22,53.9Q21.4,53.2 21.2,52.4Q21,51.6 20.8,50.8Q20.6,50 20.4,49.2Q20.1,48.3 19.9,47.5Q19.7,46.6 19.5,45.7Q19.4,44.8 19.5,43.9Q19.6,43.1 20,42.3Q20.4,41.5 20.9,40.7Q21.3,40 21.6,39.2Q22,38.4 22.7,37.8Q23.5,37.2 24.5,36.8Q25.5,36.4 26.2,35.9Q26.8,35.4 27.2,34.8Q27.7,34.1 28.1,33.5Q28.6,32.9 29,32.3Q29.5,31.7 30,31.1Q30.6,30.6 31.4,30.3Q32.1,30 33,29.9Q33.9,29.8 34.7,29.7Q35.5,29.6 36.3,29.5Q37,29.3 37.6,29Q38.2,28.6 38.6,28Q39.1,27.4 39.7,27.1Q40.4,26.8 41.1,26.8Q41.9,26.9 42.6,26.8Q43.3,26.7 43.9,26.4Q44.6,26.1 45.2,26.1Q45.9,26.1 46.6,26.1Q47.3,26.1 48,25.9Q48.6,25.7 49.3,25.5Q50,25.2 50.7,24.9Q51.4,24.7 52.2,24.4Q52.9,24.1 53.7,24Q54.4,23.9 55.2,24Q55.9,24.1 56.7,24.2Q57.4,24.4 58.1,24.7Q58.7,25.1 59.3,25.6Q59.9,26.1 60.6,26.3Q61.3,26.6 62,26.7Q62.8,26.9 63.3,27.5Q63.8,28.1 64.1,28.9Q64.4,29.8 64.8,30.3Q65.2,30.9 65.9,31.2Q66.6,31.5 67.5,31.5Q68.4,31.6 69.6,31.5Q70.8,31.4 72.1,31.4Q73.4,31.4 74.5,31.6Q75.7,31.8 76.6,32.3Q77.5,32.7 77.9,33.5Q78.4,34.3 78.2,35.4Q78.1,36.5 77.8,37.5Q77.6,38.6 77.4,39.5Q77.2,40.5 76.8,41.5Q76.3,42.4 76,43.3Q75.6,44.2 75.7,44.9Q75.8,45.6 76.1,46.3Q76.4,47 76.3,47.8Q76.3,48.5 76,49.3Z'/%3E%3C/defs%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.1' stroke-width='9' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.18' stroke-width='6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.32' stroke-width='3.6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.5' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.7' stroke-width='0.8' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --mx-ring-2: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpath id='b' d='M74.5,49.3Q74.2,50 73.7,50.7Q73.2,51.3 72.8,51.9Q72.3,52.5 71.8,53.1Q71.2,53.6 70.6,54.1Q70,54.6 69.6,55Q69.2,55.5 69.2,56.1Q69.1,56.7 69,57.2Q68.8,57.8 68.5,58.3Q68.2,58.8 68.2,59.4Q68.1,60 68.2,60.7Q68.2,61.4 68,62Q67.8,62.6 67.4,63.1Q67.1,63.6 66.6,64Q66.2,64.5 65.7,64.8Q65.2,65.2 64.9,65.7Q64.5,66.3 64.3,67Q64.1,67.7 63.9,68.4Q63.6,69.1 63.2,69.8Q62.9,70.5 62.5,71.3Q62.2,72.1 61.6,72.5Q61.1,73 60.4,73.2Q59.7,73.4 59.1,73.8Q58.5,74.2 57.9,74.7Q57.3,75.2 56.6,75.5Q55.9,75.7 55.1,75.8Q54.4,75.9 53.7,76.1Q53,76.3 52.2,76.4Q51.5,76.6 50.7,76.9Q50,77.1 49.2,77.4Q48.4,77.6 47.7,77.7Q46.9,77.7 46.1,77.9Q45.2,78 44.3,78.5Q43.4,79 42.4,79.4Q41.4,79.8 40.6,79.5Q39.8,79.2 39.2,78.4Q38.6,77.6 38.2,76.5Q37.8,75.4 37.6,74.1Q37.4,72.8 37,72Q36.7,71.1 36,71Q35.2,70.8 34.1,71Q33.1,71.2 31.8,71.5Q30.6,71.7 29.6,71.6Q28.5,71.5 27.9,70.9Q27.4,70.2 27.4,69.1Q27.3,68.1 27.4,67Q27.5,65.9 27.7,64.9Q27.8,63.9 28.1,63Q28.3,62 28.3,61.2Q28.3,60.5 28,59.8Q27.8,59.2 27.6,58.5Q27.5,57.9 27.4,57.2Q27.3,56.5 26.9,55.9Q26.5,55.4 26.2,54.7Q25.9,54.1 25.7,53.4Q25.6,52.7 25.6,52.1Q25.5,51.4 25.5,50.7Q25.5,50 25.5,49.3Q25.5,48.6 25.5,47.9Q25.4,47.2 25.5,46.5Q25.7,45.9 26.2,45.3Q26.8,44.7 27.3,44.2Q27.8,43.6 28,43Q28.1,42.4 28.3,41.7Q28.5,41.1 28.7,40.5Q28.9,39.9 29,39.2Q29.1,38.5 29.3,37.8Q29.6,37.2 30.1,36.7Q30.7,36.3 31.3,35.9Q31.9,35.6 32.5,35.2Q33,34.8 33.6,34.5Q34.1,34.1 34.5,33.7Q35,33.2 35.4,32.8Q35.9,32.3 36.5,32Q37,31.7 37.5,31.3Q38,30.9 38.4,30.3Q38.8,29.7 39.3,29.2Q39.8,28.8 40.5,28.7Q41.1,28.6 41.8,28.5Q42.4,28.3 43,28.1Q43.6,27.9 44.3,27.8Q44.9,27.7 45.5,27.5Q46.1,27.3 46.8,27Q47.4,26.8 48,26.6Q48.7,26.5 49.3,26.5Q50,26.5 50.7,26.4Q51.3,26.4 52,26.4Q52.7,26.5 53.3,26.3Q54,26.2 54.8,25.9Q55.6,25.6 56.3,25.6Q57,25.6 57.6,26.1Q58.2,26.6 58.7,27.1Q59.3,27.6 59.9,27.9Q60.5,28.3 61,28.7Q61.5,29.2 62,29.7Q62.5,30.1 63.1,30.3Q63.8,30.6 64.5,30.8Q65.1,31 65.9,31.2Q66.6,31.5 67.4,31.6Q68.2,31.8 69,32.1Q69.8,32.3 70.4,32.8Q71.1,33.2 71.7,33.7Q72.4,34.1 72.8,34.8Q73.2,35.4 73.4,36.2Q73.6,36.9 74,37.6Q74.4,38.2 75,38.8Q75.6,39.4 75.9,40.1Q76.2,40.8 76.2,41.6Q76.1,42.5 76.1,43.3Q76,44.1 75.8,44.9Q75.7,45.6 75.4,46.4Q75.2,47.2 75,47.9Q74.8,48.6 74.5,49.3Z'/%3E%3C/defs%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.1' stroke-width='9' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.18' stroke-width='6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.32' stroke-width='3.6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.5' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.7' stroke-width='0.8' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --mx-ring-3: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpath id='b' d='M72,49.4Q72,50 71.8,50.6Q71.6,51.2 71.3,51.8Q71.1,52.4 70.9,53Q70.8,53.5 70.8,54.1Q70.9,54.8 71.1,55.5Q71.4,56.2 71.6,56.9Q71.7,57.6 71.5,58.2Q71.3,58.8 71,59.4Q70.6,59.9 70.3,60.5Q70,61 69.5,61.5Q69,61.9 68.3,62.2Q67.7,62.5 67.1,62.9Q66.5,63.2 66,63.5Q65.5,63.9 65,64.2Q64.5,64.5 64.1,64.9Q63.7,65.3 63.3,65.8Q63,66.3 62.6,66.8Q62.2,67.2 61.8,67.7Q61.4,68.1 60.9,68.5Q60.4,68.8 59.8,69.1Q59.3,69.3 58.8,69.7Q58.3,70 57.9,70.7Q57.5,71.3 57,71.8Q56.4,72.4 55.8,72.6Q55.2,72.7 54.6,72.9Q53.9,73 53.3,73.3Q52.6,73.5 52,73.7Q51.3,73.9 50.7,74.1Q50,74.4 49.3,74.7Q48.6,75 47.9,75.2Q47.1,75.4 46.4,75.4Q45.7,75.4 45,75.2Q44.3,75 43.6,74.7Q43,74.3 42.4,73.9Q41.8,73.5 41.1,73.3Q40.5,73 39.9,72.7Q39.3,72.3 38.8,71.8Q38.3,71.2 37.7,70.8Q37.2,70.4 36.5,70.2Q35.8,70 35.3,69.5Q34.8,69.1 34.4,68.4Q34.1,67.8 34,67Q33.8,66.2 33.7,65.4Q33.7,64.6 33.7,63.8Q33.6,63.1 33.5,62.4Q33.3,61.8 33.1,61.3Q32.9,60.7 32.7,60.2Q32.5,59.7 32.2,59.2Q31.9,58.7 31.6,58.2Q31.4,57.7 31.2,57.2Q31.1,56.6 30.8,56.1Q30.4,55.6 29.8,55.2Q29.2,54.7 28.7,54.2Q28.3,53.7 28.1,53.1Q28,52.5 27.9,51.9Q27.8,51.2 27.7,50.6Q27.6,50 27.7,49.4Q27.8,48.8 27.9,48.1Q28.1,47.5 28.3,46.9Q28.5,46.4 28.8,45.8Q29.1,45.2 29.2,44.6Q29.3,44 29.3,43.4Q29.3,42.8 29.4,42.1Q29.6,41.5 29.6,40.9Q29.7,40.2 29.7,39.5Q29.7,38.8 29.8,38.1Q29.9,37.4 30.2,36.7Q30.4,36.1 30.4,35.2Q30.5,34.4 30.5,33.5Q30.5,32.6 30.8,31.8Q31.1,31.1 31.7,30.6Q32.3,30.2 33.1,30Q33.9,29.8 34.8,29.8Q35.6,29.7 36.3,29.6Q37.1,29.4 37.7,29.2Q38.3,28.9 39,28.7Q39.7,28.5 40.3,28.4Q41,28.2 41.6,27.9Q42.2,27.6 42.8,27.5Q43.5,27.3 44.1,27.2Q44.8,27.2 45.4,27Q46,26.7 46.7,26.3Q47.3,25.9 47.9,25.5Q48.6,25.2 49.3,24.9Q50,24.5 50.7,24Q51.5,23.5 52.3,22.8Q53.1,22.1 54,21.5Q55,20.8 55.9,20.4Q56.8,20 57.7,20.1Q58.6,20.2 59.3,20.7Q60.1,21.1 60.8,21.6Q61.5,22.1 62.2,22.7Q62.8,23.3 63.4,24.1Q63.9,24.9 64.3,25.7Q64.8,26.4 65.3,27.1Q65.7,27.8 66,28.7Q66.3,29.6 66.4,30.6Q66.5,31.5 66.8,32.3Q67,33 67.3,33.7Q67.6,34.3 67.9,34.9Q68.2,35.5 68.5,36.1Q68.8,36.7 69,37.3Q69.3,37.9 69.5,38.5Q69.8,39.1 70.2,39.6Q70.7,40 71,40.6Q71.4,41.1 71.5,41.8Q71.5,42.5 71.5,43.1Q71.5,43.8 71.6,44.4Q71.8,45 71.8,45.7Q71.9,46.3 71.8,46.9Q71.8,47.5 71.9,48.2Q72,48.8 72,49.4Z'/%3E%3C/defs%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.1' stroke-width='9' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.18' stroke-width='6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.32' stroke-width='3.6' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.5' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cuse href='%23b' fill='none' stroke='%23000' stroke-opacity='0.7' stroke-width='0.8' stroke-linejoin='round'/%3E%3C/svg%3E");
+  /* mx-blots:end */
+}
+
+.mx-ink {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  /* 번짐의 속도: 먹이 종이에 닿아 퍼지듯 처음부터 꾸준히 나아가다 끝에서 잦아든다. 거의 일정하게 나아가다 끝에서만 느려진다(진행률 0.25초에 0.29, 0.5에 0.60, 0.75에 0.85). easeOutQuad 는 첫 3분의 1에 칸이 거의 다 열려서 번지는 모습이 안 보이고, 앞쏠림이 큰 --ease-out 은 0.25초면 다 열린다 */
+  --mx-ease-bleed: cubic-bezier(0.3, 0.3, 0.6, 0.85);
+}
+
+.mx-ink-body {
+  position: relative;
+  z-index: 1;
+}
+
+.mx-ink[data-state="idle"] > .mx-ink-body {
+  opacity: 0;
+}
+
+/* 마스크를 못 쓰는 브라우저: 단순 페이드 */
+.mx-ink[data-state="run"] > .mx-ink-body {
+  animation: mx-fade 520ms ease-out both;
+}
+.mx-ink-stain {
+  display: none;
+}
+
+/*
+  번짐이 시작되기 전의 칸(그림 칸)에 프레임 바탕이 회색 사각형으로 먼저 보이지 않게 하는 것은 webtoon.css 가 맡는다
+  (.wt-panel[data-bloom] 은 프레임 바탕 ::before 를 투명하게 둔다). 번지는 동안은 한지 위로 먹이 번지고, 그림 뒤의 막(.mx-ink-stain)이 앞서 나아간다.
+*/
+
+@supports ((mask-image: url("x.svg")) or (-webkit-mask-image: url("x.svg"))) {
+  .mx-ink[data-state="run"] > .mx-ink-body,
+  .mx-ink-stain {
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    /* 세 얼룩이 서로 다른 자리에서 시작해 번지다 만난다 */
+    -webkit-mask-position: 50% 52%, 36% 62%, 66% 38%;
+    mask-position: 50% 52%, 36% 62%, 66% 38%;
+  }
+  .mx-ink[data-state="run"] > .mx-ink-body {
+    -webkit-mask-image: var(--mx-blot-1), var(--mx-blot-2), var(--mx-blot-3);
+    mask-image: var(--mx-blot-1), var(--mx-blot-2), var(--mx-blot-3);
+    /* 1.1초: 먼저 꾸준히 번지고 끝에서 천천히 잦아드는 ease-out. 칸은 한 결과에 몇 번 열리는 드문 장면이라 길어도 된다. 투명도는 처음 0.26초에 올라 번지는 가장자리만 보이게 한다 */
+    animation:
+      mx-ink-reveal 1100ms var(--mx-ease-bleed) both,
+      mx-ink-in 260ms ease-out both;
+  }
+
+  /*
+    번지는 앞머리의 젖은 가장자리: 같은 얼룩 윤곽을 따라 번지는 금빛 먹 띠(획 겹으로 그린 고리 얼룩)가 그림 뒤에서 함께 나아가고, 다 열리면 사라진다.
+    그림이 드러난 곳 바깥으로 얇게 걸쳐 보이고, 안이 비어 있는 코드 화면(구슬)에서도 칸 전체를 물들이지 않고 윤곽만 따라간다. 둥근 금빛 고리가 아니라 얼룩 모양이다.
+  */
+  .mx-ink-stain {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    -webkit-mask-image: var(--mx-ring-1), var(--mx-ring-2), var(--mx-ring-3);
+    mask-image: var(--mx-ring-1), var(--mx-ring-2), var(--mx-ring-3);
+    background: var(--glow-deep);
+    background: color-mix(in srgb, var(--glow-deep) 80%, var(--ink));
+    animation:
+      mx-ink-stain 1100ms var(--mx-ease-bleed) both,
+      mx-ink-stain-fade 1100ms linear both;
+  }
+
+  /* 가로로 넓은 칸(구슬 띠 같은 코드 화면)은 높이 기준으로 키운다: 가로 기준이면 세로가 먼저 다 열려 번지는 윤곽이 보이지 않는다 */
+  .mx-ink[data-fit="wide"][data-state="run"] > .mx-ink-body {
+    animation-name: mx-ink-reveal-h, mx-ink-in;
+  }
+  .mx-ink[data-fit="wide"] > .mx-ink-stain {
+    animation-name: mx-ink-stain-h, mx-ink-stain-fade;
+  }
+}
+
+/* 크기는 가로 기준 퍼센트다(높이는 얼룩의 가로세로비 그대로). 끝 크기는 4:5 칸에서 가장 안쪽 반경(22%)이 중심에서 가장 먼 모서리(약 0.82 x 가로)를 넘는 값(373%)에 여유를 더한 것 */
+@keyframes mx-ink-reveal {
+  from {
+    -webkit-mask-size: 4% auto, 0% auto, 0% auto;
+    mask-size: 4% auto, 0% auto, 0% auto;
+  }
+  to {
+    -webkit-mask-size: 410% auto, 385% auto, 398% auto;
+    mask-size: 410% auto, 385% auto, 398% auto;
+  }
+}
+/* 높이 기준(data-fit="wide"): 1.55:1 칸의 가장 먼 모서리(0.92 x 높이 x 1.0)를 넘는 값(420%)에 여유를 더한 것. 이보다 더 넓은 칸은 끝에서 모서리가 마지막에 열린다 */
+@keyframes mx-ink-reveal-h {
+  from {
+    -webkit-mask-size: auto 4%, auto 0%, auto 0%;
+    mask-size: auto 4%, auto 0%, auto 0%;
+  }
+  to {
+    -webkit-mask-size: auto 450%, auto 425%, auto 437%;
+    mask-size: auto 450%, auto 425%, auto 437%;
+  }
+}
+@keyframes mx-ink-in {
+  from {
+    opacity: 0;
+  }
+}
+/* 띠는 그림보다 4% 앞서 나아간다(띠의 가운데가 얼룩 윤곽 바로 바깥에 놓인다) */
+@keyframes mx-ink-stain {
+  from {
+    -webkit-mask-size: 8% auto, 0% auto, 0% auto;
+    mask-size: 8% auto, 0% auto, 0% auto;
+  }
+  to {
+    -webkit-mask-size: 426% auto, 400% auto, 414% auto;
+    mask-size: 426% auto, 400% auto, 414% auto;
+  }
+}
+@keyframes mx-ink-stain-h {
+  from {
+    -webkit-mask-size: auto 8%, auto 0%, auto 0%;
+    mask-size: auto 8%, auto 0%, auto 0%;
+  }
+  to {
+    -webkit-mask-size: auto 468%, auto 442%, auto 455%;
+    mask-size: auto 468%, auto 442%, auto 455%;
+  }
+}
+@keyframes mx-ink-stain-fade {
+  from {
+    opacity: 0;
+  }
+  14% {
+    opacity: 0.62;
+  }
+  62% {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ---------- 문장 흐림 -> 선명 ---------- */
+
+/*
+  흐림(blur)은 문단 하나(.mx-reveal)에 한 번만 건다. 단어마다 거는 blur 는 합성 층이 단어 수만큼 생겨 저사양 폰에서 프레임이 떨어진다.
+  단어는 opacity 와 translateY 만 쓴다. 끝나면 filter 가 사라져 층도 남지 않는다.
+  .mx-reveal 은 문단 전체를 한 상자로 묶으려고 block 이다(filter 가 줄바꿈된 인라인 상자에서 믿을 수 없다). 부르는 쪽은 <p> 안에 이것 하나만 둔다.
+*/
+.mx-reveal {
+  display: block;
+}
+.mx-reveal-w {
+  display: inline-block;
+}
+.mx-reveal[data-seen="false"] > .mx-reveal-w {
+  opacity: 0;
+}
+.mx-reveal[data-seen="true"] {
+  animation: mx-reveal-blur var(--mx-blur-ms, 900ms) var(--ease-out) var(--mx-blur-delay, 0ms) backwards;
+}
+/* 지연은 단어마다 인라인(animation-delay). backwards 라 기다리는 동안 안 보이고, 끝나면 기본 상태(선명)로 돌아온다 */
+.mx-reveal[data-seen="true"] > .mx-reveal-w {
+  animation: mx-word-in 640ms var(--ease-out) backwards;
+}
+@keyframes mx-reveal-blur {
+  from {
+    filter: blur(6px);
+  }
+}
+@keyframes mx-word-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+/*
+  말풍선 안의 글(재검토 P7의 남은 부분): 틀과 같은 프레임에 시작하므로(RevealText 가 틀이 본 것을 따른다) 첫 단어가 틀을 따라 곧바로 보이기 시작해야 한다.
+  흐림은 6px 가 아니라 3px, 단어는 640ms 가 아니라 440ms 로 줄여서 처음 150ms 동안 거의 안 보이던 틈을 없앤다(말풍선 밖의 문단은 그대로).
+*/
+.wt-bubble .mx-reveal[data-seen="true"] {
+  animation-name: mx-reveal-blur-soft;
+}
+.wt-bubble .mx-reveal[data-seen="true"] > .mx-reveal-w {
+  animation-duration: 440ms;
+}
+@keyframes mx-reveal-blur-soft {
+  from {
+    filter: blur(3px);
+  }
+}
+
+/*
+  다른 효과가 끝나길 기다리는 칸: 부모 칸(.wt-panel)에 data-mx-hold="true" 가 걸려 있으면 말풍선 줄을 숨기고, 시간차 말풍선 틀(data-timed)과
+  문장 애니메이션을 멈춰 둔다(result/scenes.tsx 의 LanternScene 이 여덟 글자가 등롱에 내려앉을 때까지 건다).
+  "false"로 바뀌면 줄이 떠오르고, 멈춘 애니메이션이 지연(delayMs)부터 다시 세며 흐려졌다 선명해진다. 틀과 첫 단어는 원래대로 같은 때에 나온다.
+*/
+.wt-panel[data-mx-hold] .wt-panel__lines {
+  transition: opacity 300ms ease;
+}
+.wt-panel[data-mx-hold="true"] .wt-panel__lines {
+  opacity: 0;
+}
+.wt-panel[data-mx-hold="true"] .mx-reveal,
+.wt-panel[data-mx-hold="true"] .mx-reveal-w,
+.wt-panel[data-mx-hold="true"] .wt-bubble[data-timed],
+.wt-panel[data-mx-hold="true"] .wt-bubble-group[data-timed] {
+  animation-play-state: paused;
+}
+
+/* ---------- 글자 떠오르기 ---------- */
+
+.mx-glyphs {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  --mx-gap-x: clamp(14px, 6vw, 30px);
+  color: var(--mx-glyph-color, color-mix(in srgb, var(--paper) 84%, var(--glow)));
+}
+.mx-glyphs[data-tone="paper"] {
+  color: var(--mx-glyph-color, var(--ink));
+}
+
+/* 기둥: 두 글자(위 천간, 아래 지지)가 한 기둥. 배열 순서대로 위 아래 위 아래로 채운다 */
+.mx-glyphs[data-layout="pillars"] {
+  grid-auto-flow: column;
+  grid-template-columns: repeat(var(--mx-cols, 4), auto);
+  grid-template-rows: auto auto;
+  column-gap: var(--mx-gap-x);
+  row-gap: clamp(4px, 1.6vw, 10px);
+}
+.mx-glyphs[data-layout="row"] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px var(--mx-gap-x);
+}
+
+.mx-glyph {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-hanja);
+  font-weight: 600;
+  font-size: var(--mx-glyph-size, clamp(40px, 12.5vw, 58px));
+  line-height: 1.12;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.mx-glyph-ch {
+  position: relative;
+  display: block;
+}
+/* 금빛 후광: 같은 글자에 금빛·호박색 그림자를 겹친다(정지한 text-shadow, 투명도만 움직인다). 켜졌다가 잦아든 채 남는다 */
+.mx-glyph-halo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  color: var(--glow);
+  text-shadow:
+    0 0 7px var(--glow),
+    0 0 20px var(--glow-deep),
+    0 0 34px color-mix(in srgb, var(--glow-deep) 70%, transparent);
+  pointer-events: none;
+}
+
+/*
+  먹빛 베일: 확정 이미지처럼 밝고 어두운 곳이 섞인 장면 위에서도 상아색 글자가 읽히게 글자판 뒤에 먹물을 한 겹 번지게 깐다.
+  모서리 글자까지 덮어야 해서 타원 그라데이션이 아니라 둥근 사각형을 흐리게(정지한 blur 18px, 투명도만 움직인다). 한지 위(paper)에서는 없다.
+*/
+.mx-glyphs[data-tone="night"]::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -22px -30px;
+  border-radius: 36px;
+  background: color-mix(in srgb, var(--ink) 64%, transparent);
+  filter: blur(18px);
+  pointer-events: none;
+}
+
+.mx-glyphs[data-veil="false"]::before {
+  display: none;
+}
+
+/* 아직 시작 전(화면에 안 들어옴): 모두 숨김. 시작하면 backwards 로 기다리는 동안 숨고, 끝나면 기본 상태(보임)로 남는다 */
+.mx-glyphs[data-run="false"] .mx-glyph,
+.mx-glyphs[data-run="false"]::before {
+  opacity: 0;
+}
+.mx-glyphs[data-run="false"] .mx-glyph-halo {
+  opacity: 0;
+}
+.mx-glyphs[data-run="true"] .mx-glyph {
+  animation: mx-glyph-rise var(--mx-rise, 700ms) var(--ease-out) var(--mx-delay, 0ms) backwards;
+}
+.mx-glyphs[data-run="true"] .mx-glyph-halo {
+  opacity: 0.55;
+  animation: mx-glyph-halo 1400ms ease-out var(--mx-delay, 0ms) backwards;
+}
+.mx-glyphs[data-run="true"]::before {
+  animation: mx-fade 600ms ease-out backwards;
+}
+
+@keyframes mx-glyph-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+    filter: blur(5px);
+  }
+}
+@keyframes mx-glyph-halo {
+  from {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+/*
+  내려앉기(FLIP): GlyphRise 에 landOnto 가 있으면, 다 떠오른 글자들이 등롱의 글자 자리로 날아가 앉는다.
+  비행(translate+scale)과 교차 페이드는 glyph-rise.tsx 가 Web Animations 로 건다(자리를 재서 값을 계산하므로 CSS 로는 못 적는다).
+  여기서는 먹빛 베일이 걷히고, 다 내려앉으면 글자판이 사라지는 것만 맡는다.
+*/
+.mx-glyphs[data-phase="land"]::before,
+.mx-glyphs[data-phase="landed"]::before {
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+.mx-glyphs[data-phase="landed"] {
+  visibility: hidden;
+}
+
+/* 겹쳐 쌓기: 칸 하나에 층을 겹칠 때(글자판이 등롱 위에 뜬다) */
+.mx-stack {
+  display: grid;
+}
+.mx-stack > * {
+  grid-area: 1 / 1;
+}
+.mx-land-layer {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  pointer-events: none;
+}
+
+/* ---------- 문빛 번짐 ---------- */
+
+/*
+  문빛은 화면 가운데가 아니라 신당 문에서 터진다: GateBloom 의 origin 인자가 --gate-x, --gate-y(CSS 길이)로 들어온다(기본은 가운데).
+  --gate-door-h 는 문의 높이: 문틈은 그만큼만 그려서 제목 글자를 가로지르지 않는다.
+*/
+.mx-gate {
+  --gate-x: 50%;
+  --gate-y: 50%;
+  --gate-door-h: clamp(52px, 9vh, 92px);
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+
+/* 마지막에 덮는 막: 모서리까지 빈틈없이 채운다. 번짐의 끝 색(옅은 금빛 한지색) */
+.mx-gate-wash {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--glow) 50%, rgb(var(--mist-rgb)));
+  animation: mx-gate-wash 300ms var(--ease-out) 300ms both;
+}
+
+/* 금빛 구: 문 자리에서 작게 접힌 채 커진다. 100vmax 를 2.6배까지(문이 화면 위쪽이어도 아래 모서리까지 닿는 반경. 남는 모서리는 위의 막이 덮는다) */
+.mx-gate-glow {
+  position: absolute;
+  left: var(--gate-x);
+  top: var(--gate-y);
+  width: 100vmax;
+  height: 100vmax;
+  margin: -50vmax 0 0 -50vmax;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle closest-side,
+    var(--paper) 0%,
+    var(--glow) 32%,
+    color-mix(in srgb, var(--glow) 70%, transparent) 54%,
+    color-mix(in srgb, var(--glow) 30%, transparent) 80%,
+    transparent 100%
+  );
+  /* 문틈이 먼저 열리고(0~), 120ms 뒤 빛이 번진다. 번짐은 앞쏠림이 덜한 easeOutCubic(easings.net)이라 커지는 모습이 보인다 */
+  animation: mx-gate-glow 480ms cubic-bezier(0.215, 0.61, 0.355, 1) 120ms both;
+  will-change: transform;
+}
+
+/*
+  문틈: 문 자리에 세로로 가늘게 열린 금빛 한 줄(문 높이만큼만). 빛이 번지는 동안 옆으로 넓어지며 녹는다.
+  넓어져도 모서리가 사각형으로 보이지 않게 가로는 가운데가 밝고 양끝이 투명한 그라데이션, 위아래 끝은 mask 로 흐린다(둘 다 정지한 값).
+*/
+.mx-gate-slit {
+  position: absolute;
+  left: var(--gate-x);
+  top: calc(var(--gate-y) - var(--gate-door-h) / 2);
+  height: var(--gate-door-h);
+  width: 6px;
+  margin-left: -3px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--glow) 90%, transparent) 30%,
+    var(--paper) 50%,
+    color-mix(in srgb, var(--glow) 90%, transparent) 70%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  animation: mx-gate-slit 400ms var(--ease-out) both;
+  will-change: transform;
+}
+
+@keyframes mx-gate-slit {
+  from {
+    opacity: 0;
+    transform: scaleX(0.2) scaleY(0.6);
+  }
+  25% {
+    opacity: 1;
+    transform: scaleX(1) scaleY(1);
+  }
+  to {
+    opacity: 0;
+    transform: scaleX(24) scaleY(1);
+  }
+}
+@keyframes mx-gate-glow {
+  from {
+    opacity: 0;
+    transform: scale(0.04);
+  }
+  20% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: scale(2.6);
+  }
+}
+@keyframes mx-gate-wash {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 걷힘: 빛이 옅어지며 새 화면이 드러난다. 들어올 때(0.6초)보다 빠르게 */
+.mx-gate[data-state="out"] {
+  pointer-events: none;
+  animation: mx-gate-out 450ms var(--ease-out) both;
+}
+@keyframes mx-gate-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ---------- 동작 줄이기: 애니메이션 없이 곧바로 최종 상태 ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .mx-ink[data-state="run"] > .mx-ink-body {
+    animation: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .mx-ink-stain {
+    display: none;
+  }
+
+  .mx-reveal,
+  .mx-reveal[data-seen="true"],
+  .mx-reveal[data-seen="true"] > .mx-reveal-w {
+    animation: none;
+  }
+  .mx-reveal[data-seen="false"] > .mx-reveal-w {
+    opacity: 1;
+  }
+  .wt-bubble .mx-reveal[data-seen="true"],
+  .wt-bubble .mx-reveal[data-seen="true"] > .mx-reveal-w {
+    animation: none;
+  }
+
+  .mx-glyphs[data-run="true"] .mx-glyph,
+  .mx-glyphs[data-run="true"] .mx-glyph-halo,
+  .mx-glyphs[data-run="true"]::before {
+    animation: none;
+  }
+
+  /* 기다리는 칸도 없다: 말풍선 줄은 처음부터 보이고 애니메이션은 멈추지 않는다 */
+  .wt-panel[data-mx-hold] .wt-panel__lines {
+    opacity: 1;
+    transition: none;
+  }
+  .wt-panel[data-mx-hold="true"] .mx-reveal,
+  .wt-panel[data-mx-hold="true"] .mx-reveal-w,
+  .wt-panel[data-mx-hold="true"] .wt-bubble[data-timed],
+  .wt-panel[data-mx-hold="true"] .wt-bubble-group[data-timed] {
+    animation-play-state: running;
+  }
+
+  /* 문빛은 화면을 덮는 전환이라 짧은 페이드만 남긴다(번쩍이는 한 장면이 아니라 색이 덮이는 것) */
+  .mx-gate-slit,
+  .mx-gate-glow {
+    display: none;
+  }
+  .mx-gate-wash {
+    animation: mx-gate-wash 200ms ease 0ms both;
+  }
+  .mx-gate[data-state="out"] {
+    animation-duration: 200ms;
+  }
+}

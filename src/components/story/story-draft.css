@@ -1,0 +1,49 @@
+.sdd-head {
+  padding: 22cqw 6cqw 0;
+  text-align: center;
+}
+.sdd-head p {
+  color: var(--sd-accent);
+  font-size: 3.8cqw;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+.sdd-head h1 {
+  margin-top: 1.5cqw;
+  font-size: 8cqw;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+.sdd-end {
+  margin-top: 36cqw;
+  padding: 0 7cqw 30vh;
+  text-align: center;
+}
+.sdd-end__done {
+  font-size: 4.6cqw;
+  color: rgba(245, 242, 238, 0.6);
+}
+.sdd-end__label {
+  margin-top: 16cqw;
+  color: var(--sd-accent);
+  font-size: 3.6cqw;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+.sdd-end__next {
+  margin-top: 2cqw;
+  font-size: 7.4cqw;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+.sdd-end__cta {
+  display: block;
+  margin-top: 10cqw;
+  padding: 4.6cqw;
+  border-radius: 2.4cqw;
+  background: var(--sd-ivory);
+  color: var(--sd-ink);
+  font-size: 4.6cqw;
+  font-weight: 800;
+  text-decoration: none;
+}

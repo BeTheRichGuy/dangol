@@ -1,0 +1,100 @@
+{
+  "pitch": {
+    "sectionLabel": "Continue Yul’s full reading",
+    "lead": "That wraps up our first chapter. Let’s take our time looking at how your tendencies show up at work, with money, in love, and around family.",
+    "questionsHeading": "What we explore in the next chapters",
+    "questions": [
+      "What kinds of work bring out your natural strengths best?",
+      "How does money tend to flow in, and where does it quietly slip away?",
+      "How do you change when you love someone?"
+    ],
+    "menuHeading": "Twelve sections opening up next",
+    "tags": {
+      "why": "Going deeper",
+      "more": "Continuing",
+      "new": "New topic"
+    },
+    "legend": "Going deeper and Continuing build on earlier themes. New topic covers fresh ground.",
+    "format": "Made of 36 webtoon panels and 12 written sections. It opens right here in this tab 2 to 5 minutes after payment.",
+    "ctaLabel": "Continue Yul’s full reading"
+  },
+  "offer": [
+    "A clear look at your core pattern in one line",
+    "How your element balance shapes everyday habits",
+    "Your natural rhythm for starting projects and seeing them through",
+    "Habits that tend to run you down, and when to hit pause",
+    "Strengths that come naturally to you and set you apart",
+    "Work environments and tasks where your skills feel at ease",
+    "Where money tends to find you, and ways to catch quiet leaks",
+    "Your habits when you open your heart, and what keeps love comfortable",
+    "Roles you tend to carry with family, and keeping a healthy distance",
+    "People who feel steady to be around, and connections to handle gently",
+    "Spaces that help you recharge when you’re drained",
+    "A parting thought from Yul and a small reminder to keep close"
+  ],
+  "confirm": {
+    "title": "Yul’s full reading, from chapter 2",
+    "lead": "It picks up right where your free result left off. You won’t need to enter your details again.",
+    "opensToggle": "See what opens up",
+    "price": "{price}, paid once",
+    "period": "It starts right after payment, and writing takes 2 to 5 minutes.",
+    "keepSignedIn": "If you’re signed in, it’s saved under My readings. If not, you can read it only in this tab.",
+    "refund": "Once your reading starts being written, it can’t be cancelled for a refund. You’ll see the full details in the next payment window.",
+    "browse": "Explore other rooms"
+  },
+  "failure": {
+    "title": "Payment was not completed",
+    "body": "The details and question you entered are still in this tab.",
+    "backToFree": "Back to your free result",
+    "retry": "Try paying again"
+  },
+  "readHead": {
+    "title": "Yul’s full reading, chapter 2",
+    "seen": "Your type from the free result: {type}"
+  },
+  "sticky": {
+    "region": "Continue reading shortcut",
+    "label": "Continue Yul’s full reading",
+    "note": "12 sections, starts right after payment"
+  },
+  "keepers": {
+    "sectionLabel": "Other shamans",
+    "heading": "More shamans are waiting up the stairs",
+    "lead": "Different worries call for different people. Head to the main screen and step into whichever room calls to you.",
+    "mansin": "Ten-year flow and 2027",
+    "yeon": "Love and the people coming your way",
+    "reunion": "After a breakup: should you reach out?",
+    "cta": "Meet them on the main screen"
+  },
+  "teaser": {
+    "hiddenSr": "The rest of this line is hidden",
+    "questionLine": "I’ll come back to the question you wrote in your full reading."
+  },
+  "gap": {
+    "wealth": {
+      "none": "Wait… there’s no money character anywhere on the surface of your chart.",
+      "one": "Wait… there’s only one money character on the surface of your chart.",
+      "body": "Money does come in, but it’s easy for it to slip right back out without you noticing. Plugging that quiet leak starts with {blur}."
+    },
+    "power": {
+      "none": "Wait… the spot for structure and taking the lead is empty on the surface.",
+      "one": "Wait… the spot for structure and taking the lead holds just one character on the surface.",
+      "body": "Without someone setting the stage, starting can feel hard, and finishing can get fuzzy. Finding your steady footing starts with {blur}."
+    },
+    "output": {
+      "none": "Wait… the spot for letting your thoughts out freely is empty on the surface.",
+      "one": "Wait… the spot for letting your thoughts out freely holds just one character on the surface.",
+      "body": "It’s easy to swallow what you want to say until it all spills out at the wrong moment. An easier way to speak your mind starts with {blur}."
+    },
+    "resource": {
+      "none": "Wait… there’s no spot on the surface where you can lean back and rest.",
+      "one": "Wait… there’s only one spot on the surface where you can lean back and rest.",
+      "body": "Even on rough days, you tend to handle everything on your own. A place where you can finally put your guard down starts with {blur}."
+    },
+    "peer": {
+      "none": "Wait… there’s no spot on the surface for people who stand by you unconditionally.",
+      "one": "Wait… there’s only one spot on the surface for people who stand by you unconditionally.",
+      "body": "Even when you’re surrounded by people, it’s easy to keep things to yourself and push through quietly. Finding someone who will truly stand in your corner starts by looking toward {blur}."
+    }
+  }
+}

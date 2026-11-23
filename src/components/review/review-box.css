@@ -1,0 +1,129 @@
+.rv-box {
+  display: grid;
+  gap: 10px;
+  margin-top: 40px;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--line-1, rgba(255, 246, 230, 0.2));
+  border-radius: 14px;
+  background: rgba(255, 246, 230, 0.04);
+  color: var(--ivory, #fff6e6);
+}
+.rv-box form {
+  display: grid;
+  gap: 10px;
+}
+.rv-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.rv-note {
+  margin: -6px 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ivory-soft, rgba(255, 246, 230, 0.72));
+}
+.rv-stars {
+  display: flex;
+  gap: 2px;
+}
+.rv-star {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ivory-soft, rgba(255, 246, 230, 0.72));
+  cursor: pointer;
+  transition: color 120ms ease, transform 120ms ease;
+}
+.rv-star[data-on] {
+  color: var(--glow, #f6c98b);
+}
+.rv-star:active {
+  transform: scale(0.92);
+}
+.rv-star:focus-visible,
+.rv-send:focus-visible,
+.rv-text:focus-visible {
+  outline: 2px solid var(--glow, #f6c98b);
+  outline-offset: 2px;
+}
+.rv-text {
+  width: 100%;
+  resize: vertical;
+  min-height: 72px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-1, rgba(255, 246, 230, 0.2));
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.18);
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.rv-text::placeholder {
+  color: var(--ivory-soft, rgba(255, 246, 230, 0.72));
+  opacity: 0.8;
+}
+.rv-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rv-count {
+  font-size: 0.75rem;
+  color: var(--ivory-soft, rgba(255, 246, 230, 0.72));
+}
+.rv-send {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--glow, #f6c98b);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--glow, #f6c98b);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.rv-send:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.rv-error {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #f3a3a3;
+}
+.rv-box--done {
+  justify-items: center;
+  text-align: center;
+}
+.rv-thanks {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+.rv-reward {
+  margin: -4px 0 0;
+  white-space: pre-line;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--glow, #f6c98b);
+}
+
+.rv-chat {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #ff3d5a;
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+}

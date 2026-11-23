@@ -1,0 +1,64 @@
+.rm-deal {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 5px;
+  row-gap: 2px;
+}
+.rm-deal__tag {
+  align-self: center;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--glow);
+  color: #1b1420;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.rm-deal__was {
+  font-weight: 400;
+  opacity: 0.65;
+  white-space: nowrap;
+  text-decoration-thickness: 1.5px;
+}
+.rm-deal__arrow {
+  opacity: 0.8;
+}
+.rm-deal__now {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rm-deal__off {
+  align-self: center;
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: var(--seal);
+  color: #fff;
+  font-size: 0.71875rem;
+  font-weight: 800;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.rm-deal--stack {
+  display: inline-grid;
+  justify-items: end;
+  row-gap: 0;
+  line-height: 1.1;
+}
+.rm-deal--stack .rm-deal__arrow {
+  display: none;
+}
+.rm-deal--stack .rm-deal__was {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  opacity: 0.6;
+}
+.rm-deal--stack .rm-deal__now {
+  font-size: 1.1875rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
